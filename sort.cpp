@@ -90,6 +90,9 @@ int* merge_sort(int a[], int length){
 
 // quick sort
 void quick_sort(int *a, int st, int ed){
+    if (ed-st<1){
+        return;
+    }
     int p = a[ed-1]; // pivot = last element
     int i = st-1;
     for (int j=st;j<ed-1;j++){
@@ -98,12 +101,10 @@ void quick_sort(int *a, int st, int ed){
             swap(a[i],a[j]);
         }
     }
+
     swap(a[i+1],a[ed-1]);
-    if (i==st-1 || i==ed-2){
-        return;
-    }
-    quick_sort(&a[st],st,i+1);
-    quick_sort(&a[i+2],i+2,ed);
+    quick_sort(a,st,i+1);
+    quick_sort(a,i+2,ed);
 }
 
 
@@ -115,17 +116,18 @@ void print_array(int a[]){
 }
 
 int main(){
-    cout << "the length of the array: " ;
-    int n;
-    cin >> n;
-    cout << endl;
+    // cout << "the length of the array: " ;
+    // int n;
+    // cin >> n;
+    // cout << endl;
+    int n = 1000000
     string arr_type[3] = {"ascending", "descending", "random"};
     string sort_type[3] = {"insertion", "merge", "quick"};
 
     for (int i=0;i<3;i++){
         int *arr = gen_array(n, i);
         int result[n];
-
+        cout << arr_type[i] << " order " << endl;
         for (int j=0;j<3;j++){
             clock_t st = clock();
             if (j==0){
@@ -141,7 +143,7 @@ int main(){
                 quick_sort(result, 0, n);
             }
             clock_t et = clock();
-            cout << arr_type[i] << " " << sort_type[j] << " sort time: " \
+            cout << sort_type[j] << " sort time: " \
                 << difftime(et,st)/CLOCKS_PER_SEC << "s" << endl;
             cout << "input: "<< " ";
             print_array(arr); 
