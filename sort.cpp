@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <ctime>
 using namespace std;
 
@@ -93,7 +94,9 @@ void quick_sort(int *a, int st, int ed){
     if (ed-st<1){
         return;
     }
-    int p = a[ed-1]; // pivot = last element
+    //int p = a[ed-1]; // pivot = last element. this is the worst case. all elements goes to one side.
+    //int p = a[st]; // pivot = first element.this too.
+    int p = a[(st+ed)/2]; // pivot = middle element
     int i = st-1;
     for (int j=st;j<ed-1;j++){
         if (a[j]<=p){
@@ -120,7 +123,7 @@ int main(){
     // int n;
     // cin >> n;
     // cout << endl;
-    int n = 1000000
+    int n = 1000000;
     string arr_type[3] = {"ascending", "descending", "random"};
     string sort_type[3] = {"insertion", "merge", "quick"};
 
@@ -129,17 +132,20 @@ int main(){
         int result[n];
         cout << arr_type[i] << " order " << endl;
         for (int j=0;j<3;j++){
-            clock_t st = clock();
+            clock_t st;
             if (j==0){
                 copy(arr, arr+n,result);
+                st = clock();
                 insertion_sort(result, n);
             }
             if (j==1){
                 int *result;
+                st = clock();
                 result = merge_sort(arr, n);
             }
             if (j==2){
                 copy(arr, arr+n,result);
+                st = clock();
                 quick_sort(result, 0, n);
             }
             clock_t et = clock();
