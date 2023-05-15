@@ -62,9 +62,9 @@ void peak_finder(vector<vector<int>> matrix, int& pr, int& pc, int& pv){
 
     while (ed_j-st_j>=1){
         i = find_max_in_column(matrix, j);
-        cout << "i: " << i << " j: " << j << " st_j: " << st_j << " ed_j: " << ed_j << endl; //debug
+        //cout << "i: " << i << " j: " << j << " st_j: " << st_j << " ed_j: " << ed_j << endl; //debug
         if ((ed_j-st_j)==1){
-            cout << "n_col==1" << endl; //debug
+            //cout << "n_col==1" << endl; //debug
             pr = i;
             pc = st_j;
             pv = matrix[pr][pc];
@@ -72,19 +72,19 @@ void peak_finder(vector<vector<int>> matrix, int& pr, int& pc, int& pv){
         }
         i = find_max_in_column(matrix,j);
         if (for_compare(matrix, i, j-1) > for_compare(matrix, i, j)){
-            cout << "pick left" << endl; //debug
+            //cout << "pick left" << endl; //debug
             ed_j = j-1;
             j = (ed_j+st_j)/2;
             continue;
         }
         if (for_compare(matrix, i, j+1) > for_compare(matrix, i, j)){
-            cout << "pick right" << endl; //debug
+            //cout << "pick right" << endl; //debug
             st_j = j+1;
             j = (ed_j+st_j)/2;
             continue;
         }
         else{
-            cout << "pick the current column" << endl; //debug
+            //cout << "pick the current column" << endl; //debug
             pr = i;
             pc = j;
             pv = matrix[pr][pc];
