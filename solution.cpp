@@ -2,7 +2,7 @@
 #include <vector>
 #include <cmath>
 #include "solution.h"
-
+#include <iostream>
 using namespace std;
 
 int return_nines(int n){
@@ -14,7 +14,7 @@ int return_nines(int n){
 }
 
 int get_nine_padded_number(int a){
-    int n_digit = 0;
+    int n_digit = 1;
     int tmp_a = a;
     while(tmp_a>=10){
         ++n_digit;
@@ -30,10 +30,10 @@ int compare(int a, int b){
     
     nine_padded_a = get_nine_padded_number(a);
     nine_padded_b = get_nine_padded_number(b);
-    if (a>b){
+    if (nine_padded_a>nine_padded_b){
         return 1;
     }
-    else if (a==b){
+    else if (nine_padded_a==nine_padded_b){
         return 0;
     }
     else{
@@ -47,7 +47,7 @@ int* merge(int l[], int r[], int l_n, int r_n){
     int j=0;
     int k=0;
     while (i<l_n && j<r_n){
-        if (compare(l[i],r[j])==-1||compare(l[i],r[j])==0){
+        if (compare(l[i],r[j])==1||compare(l[i],r[j])==0){
             a[k]=l[i];
             i++;
         }
@@ -114,15 +114,18 @@ vector< vector<int> > classify_by_the_first_digit(vector<int> numbers){
         }
         groups[first_digit].push_back(numbers[i]);
     }
-    for (int i=1;i<10;i++){
-        int length = groups[i].size();
-        int *sorted = merge_sort(&groups[i][0],length);
-        groups[i] = vector<int>(sorted,sorted+length);
-    }
     vector<int> thousands(n_thousands,1000);
     vector<int> zeros(n_zeros,0);   
     groups[0].insert(groups[0].end(), thousands.begin(), thousands.end());
     groups[0].insert(groups[0].end(), zeros.begin(), zeros.end());
+    for (int i=1;i<10;i++){
+        int length = groups[i].size();
+        if (length==0){
+            continue;  
+        }
+        int *sorted = merge_sort(&groups[i][0],length);
+        groups[i] = vector<int>(sorted,sorted+length);
+    }
     return groups;
 }
 
