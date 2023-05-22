@@ -8,7 +8,6 @@ using namespace std;
 
 vector<int> parse_input(string int_s){
     vector<int> int_v;
-    cout << int_s << endl;
     int_s.erase(remove(int_s.begin(),int_s.end(),' '),int_s.end());
     int_s.erase(remove(int_s.begin(),int_s.end(),'['),int_s.end());
     int_s.erase(remove(int_s.begin(),int_s.end(),']'),int_s.end());
