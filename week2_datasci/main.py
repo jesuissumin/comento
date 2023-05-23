@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 from sklearn.decomposition import PCA
 
 # sqlite3 practice
@@ -251,14 +251,22 @@ def anal_fig():
     importances = model.feature_importances_
     indices = np.argsort(importances)[::-1]
     indices = indices[:10]
-    mse = mean_squared_error(y, model.predict(X))
     plt.figure(figsize=(8, 6))
     plt.title("Feature importances")
     plt.bar(range(10), importances[indices], align="center")
     plt.xticks(range(10), X.columns[indices], rotation=90)
     plt.xlim([-1, 10])
-    plt.text(2, 0.25, f"MSE: {mse:.2f}", fontsize=16)
     plt.savefig('figs/anal6.png', bbox_inches='tight', dpi=200)
+    plt.clf()
+
+    # scatter plot of pred and true 
+    plt.figure(figsize=(8, 6))
+    sns.scatterplot(y, model.predict(X))
+    plt.plot([0, 800000], [0, 800000])
+    plt.title("Predicted vs True")
+    mae = mean_absolute_error(y, model.predict(X))
+    plt.text(0, 700000, f"MSE: {mae:.2f}", fontsize=16)
+    plt.savefig('figs/anal7.png', bbox_inches='tight', dpi=200)
     plt.clf()
 
 
